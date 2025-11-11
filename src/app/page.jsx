@@ -1,19 +1,21 @@
-"use client";
+import React from "react";
+import LoginForm from "./components/LoginForm";
+import SignInButton from "./components/sign-in-button";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-import Image from "next/image";
-import Navbar from "./components/Navbar.jsx";
-import TodolistBlock from "./components/TodolistBlock.jsx";
-import { signIn } from "@/auth.js";
 export default function Home() {
   return (
-    <div className="">
-      <div>
-        {" "}
-        <p>You are not signed in</p>{" "}
-        <button onClick={() => signIn("github")} className="bg-gray-600 p-40">
-          sign in with github
-        </button>
-      </div>
+    <div className=" bg-bg-900 min-h-screen flex flex-col gap-20 justify-center items-center">
+      <main className="flex-1 flex flex-col justify-center place-items-center w-full">
+        <div className="flex flex-col bg-bg-800 p-6 rounded-2xl shadow-l place-items-center justify-center gap-4">
+          <h1 className="sm:text-5xl font-semibold text-text">
+            Welcome to ListThat
+          </h1>
+          <SignInButton />
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

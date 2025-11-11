@@ -1,18 +1,71 @@
 @import "tailwindcss";
-* {
+
+body {
   margin: 0;
   padding: 0;
 }
+
 :root {
-  --background: #7da3ff;
-  --foreground: #171717;
+  /* --container: #5c6b73;
+  --h1: #9db4c0;
+  --h2: #c2dfe3;
+  --text: #e0fbfc;
+  --bg-900: hsl(0, 0, 0%);
+  --bg-800: hsl(0, 0, 5%);
+  --bg-700: hsl(0, 0, 10%);
+  --text: hsl(0, 0, 95%);
+  --text-muted: hsl(0, 0, 95%);
+  --border: hsl(0, 0, 30%);
+  --highlight: hsl(0, 0, 60%); */
+  --bg-dark: oklch(0.1 0 160);
+  --bg: oklch(0.15 0 160);
+  --bg-light: oklch(0.2 0 160);
+  --bg-lighter: oklch(0.25 0 160);
+  --text: oklch(0.96 0 160);
+  --text-muted: oklch(0.76 0 160);
+  --highlight: oklch(0.5 0 160);
+  --border: oklch(0.4 0 160);
+  --border-muted: oklch(0.3 0 160);
+  --primary: oklch(0.76 0.1 160);
+  --secondary: oklch(0.76 0.1 340);
+  --danger: oklch(0.7 0.05 30);
+  --warning: oklch(0.7 0.05 100);
+  --success: oklch(0.7 0.05 160);
+  --info: oklch(0.7 0.05 260);
+  --high-900: oklch(0.55 0.22 25);
+  --high-800: oklch(0.7 0.22 25);
+  --medium-900: oklch(0.8 0.2 105);
+  --medium-800: oklch(0.7 0.15 95);
+  --low-900: oklch(0.65 0.18 150);
+  --low-800: oklch(0.9 0.18 150);
 }
 
 @theme inline {
+  --color-bg-900: var(--bg-dark);
+  --color-bg-800: var(--bg);
+  --color-bg-700: var(--bg-light);
+  --color-bg-600: var(--bg-lighter);
+  --color-border: var(--border);
+  --color-highlight: var(--highlight);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --shadow-s: inset 0 1px 2px #ffffff30, 0 1px 2px #00000030,
+    0 2px 4px #00000015;
+
+  --shadow-m: inset 0 1px 2px #ffffff30, 0 2px 4px #00000030,
+    0 4px 8px #00000015;
+  --shadow-l: inset 0 1px 2px #ffffff30, 0 4px 6px #00000030,
+    0 6px 10px #00000015;
+  --color-high-900: var(--high-900);
+  --color-high-800: var(--high-800);
+  --color-medium-900: var(--medium-900);
+  --color-medium-800: var(--medium-800);
+  --color-low-900: var(--low-900);
+  --color-low-800: var(--low-800);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,8 +75,27 @@
   }
 }
 
+@layer components {
+  .textField {
+    background-color: white;
+    color: black;
+    padding: 4px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 500ms;
+  }
+
+  .textField:focus {
+    text-align: left;
+  }
+
+  .textField:focus::placeholder {
+    opacity: 0;
+  }
+}
+
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
 }
