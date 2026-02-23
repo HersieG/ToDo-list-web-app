@@ -83,14 +83,14 @@ export default function SimpleForm() {
     <div className="max-w-2xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">Simple Form Example</h1>
 
-      {/* THE FORM */}
+
       <form
         onSubmit={handleSubmit}
         className="mb-8 p-6 border rounded-lg bg-white shadow"
       >
         <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
 
-        {/* Title Input */}
+
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Title:</label>
           <input
@@ -103,7 +103,7 @@ export default function SimpleForm() {
           />
         </div>
 
-        {/* Description Input */}
+      
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Description:</label>
           <textarea
@@ -116,7 +116,7 @@ export default function SimpleForm() {
           />
         </div>
 
-        {/* Submit Button */}
+     
         <button
           type="submit"
           disabled={loading}
@@ -126,7 +126,7 @@ export default function SimpleForm() {
         </button>
       </form>
 
-      {/* DISPLAY SAVED POSTS */}
+    
       <div>
         <h2 className="text-2xl font-bold mb-4">Saved Posts</h2>
 

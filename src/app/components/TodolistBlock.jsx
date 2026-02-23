@@ -87,7 +87,21 @@ const TodolistBlock = ({ onClose, onTaskCreated }) => {
         onSubmit={handleSubmit}
         className="flex flex-col place-items-center gap-10 "
       >
-        <h2>Create Task</h2>
+        <div className="flex w-full ">
+          <div className="flex-1"></div>
+          <h2 className="flex-1 flex justify-center place-items-center">
+            Create Task
+          </h2>
+          <div className="flex-1 flex justify-end place-items-center">
+            <button
+              className="bg-bg-600 shadow-l p-3 rounded-xl hover:cursor-pointer "
+              onClick={() => onClose()}
+            >
+              X
+            </button>
+          </div>
+        </div>
+
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -115,29 +129,25 @@ const TodolistBlock = ({ onClose, onTaskCreated }) => {
           required
         />
         <label htmlFor="priority">Priority</label>
-        {/* <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-          <option value="">-- Select --</option>
-          <option value="option1">HIGH</option>
-          <option value="option2">MEDIUM</option>
-          <option value="option3">LOW</option>
-        </select> */}
+
         <div className="flex gap-6">
           <button
             type="button"
             value="HIGH"
             onClick={(e) => setPriority(e.target.value)}
-            className={`  shadow-m  ${activePriority(
-              "HIGH"
+            className={`shadow-m ${activePriority(
+              "HIGH",
             )} p-4 rounded-2xl hover:cursor-pointer transition-all duration-[300ms]`}
           >
             HIGH
           </button>
+
           <button
             type="button"
             value="MEDIUM"
             onClick={(e) => setPriority(e.target.value)}
-            className={`  ${activePriority(
-              "MEDIUM"
+            className={`${activePriority(
+              "MEDIUM",
             )} p-4 rounded-2xl   hover:cursor-pointer transition-all duration-[300ms]`}
           >
             MEDIUM
@@ -146,8 +156,8 @@ const TodolistBlock = ({ onClose, onTaskCreated }) => {
             type="button"
             value="LOW"
             onClick={(e) => setPriority(e.target.value)}
-            className={`  ${activePriority(
-              "LOW"
+            className={`${activePriority(
+              "LOW",
             )} p-4 rounded-2xl   hover:cursor-pointer transition-all duration-[300ms]`}
           >
             LOW
@@ -156,9 +166,9 @@ const TodolistBlock = ({ onClose, onTaskCreated }) => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+          className="bg-bg-600 text-text px-6 py-2 rounded-2xl shadow-l active:scale-95 "
         >
-          {loading ? "Saving..." : "Save Post"}
+          {loading ? "Saving..." : "Save Task"}
         </button>
       </form>
     </div>
