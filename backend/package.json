@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "overrides": {
+    "@hono/node-server": "1.19.11",
+    "@mrleebo/prisma-ast": "0.15.0",
+    "prisma": {
+      "hono": "4.12.8",
+      "@hono/node-server": "1.19.11",
+      "@mrleebo/prisma-ast": "0.15.0"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^7.5.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "hono": "^4.12.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^7.5.0"
+  }
+}
