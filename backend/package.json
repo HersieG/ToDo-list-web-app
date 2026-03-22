@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "seed:tasks": "node prisma/seed.js"
   },
   "overrides": {
     "@hono/node-server": "1.19.11",
