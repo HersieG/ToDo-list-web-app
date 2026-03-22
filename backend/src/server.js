@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import taskRoutes from "./routes/taskRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
+import invitationRoutes from "./routes/invitationRoutes.js";
 connectDB();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use("/auth", authRoutes);
 app.use("/task", taskRoutes);
 app.use("/team", teamRoutes);
+app.use("/invite", invitationRoutes);
 const PORT = 5001;
 
 const server = app.listen(PORT, () => {

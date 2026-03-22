@@ -56,6 +56,50 @@ export const getTeam = async (req, res) => {
   }
 };
 
+export const getTeamMembers = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const teamId = req.params.id;
+    console.log(teamId);
+    const teamMembers = await prisma.team.findFirst({
+      where: {
+        id: teamId,
+        members: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+      select: {
+        name: true,
+        members: {
+          select: {
+            role: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!teamMembers) {
+      return res.status(404).json({ error: "Team not found or access denied" });
+    }
+
+    res.status(200).json({ status: "Success", data: teamMembers });
+  } catch (error) {
+    console.error("Error fetching team members:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching the team members" });
+  }
+};
+
 export const createTeam = async (req, res) => {
   const userId = req.user.id;
   const { name, description } = req.body;
@@ -147,5 +191,43 @@ export const deleteTeam = async (req, res) => {
     res
       .status(500)
       .json({ error: "An error occurred while updating the team" });
+  }
+};
+
+export const invite = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { teamId, recipientId } = req.params;
+
+    // check to see if the user is apart of the team first or if they are an admin/owner of the team if they are in it
+    const member = await prisma.teamMember.findFirst({
+      where: {
+        userId: userId,
+        teamId: teamId,
+        role: { in: ["ADMIN", "OWNER"] },
+      },
+    });
+
+    if (!member) {
+      return res
+        .status(404)
+        .json({ error: "You do not have permission to invite users." });
+    }
+
+    // now invite after validation
+    const invitedUser = await prisma.invitation.create({
+      data: {
+        userId: recipientId,
+        teamId: teamId,
+        createdById: userId,
+      },
+    });
+
+    return res.status(404).json({ status: "Success", data: invitedUser });
+  } catch (error) {
+    console.error("Error inviting user to team:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while inviting user to the team" });
   }
 };
