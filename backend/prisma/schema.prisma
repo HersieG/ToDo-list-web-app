@@ -20,6 +20,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   tasks     Task[]
+  teams     TeamMember[]
 }
 
 enum priority {
@@ -38,4 +39,31 @@ model Task {
   updatedAt   DateTime @updatedAt
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+enum teamRole {
+  OWNER
+  MEMBER
+}
+model TeamMember{
+  id     String @id @default(uuid())
+  userId String
+  teamId String
+  role   teamRole @default(MEMBER)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+}
+
+model Team {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  members     TeamMember[]
+  tasks       Task[]
 }

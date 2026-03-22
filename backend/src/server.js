@@ -1,6 +1,8 @@
 import express from "express";
 import "dotenv/config";
 import { connectDB, disconnectDB } from "./config/db.js";
+import cookieParser from "cookie-parser";
+
 // routes
 import taskRoutes from "./routes/taskRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -11,6 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/auth", authRoutes);
 app.use("/task", taskRoutes);
