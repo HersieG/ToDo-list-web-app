@@ -13,6 +13,9 @@
       "hono": "4.12.8",
       "@hono/node-server": "1.19.11",
       "@mrleebo/prisma-ast": "0.15.0"
+    },
+    "@prisma/dev": {
+      "hono": "4.12.8"
     }
   },
   "keywords": [],
@@ -26,6 +29,7 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "hono": "^4.12.8",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0"
   },
   "devDependencies": {
