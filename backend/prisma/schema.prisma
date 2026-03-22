@@ -21,6 +21,8 @@ model User {
   updatedAt DateTime @updatedAt
   tasks     Task[]
   teams     TeamMember[]
+  createdTeams Team[]
+  notifications Notification[]
 }
 
 enum priority {
@@ -41,10 +43,12 @@ model Task {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   teamId      String?
   team        Team?     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  
 }
 
 enum teamRole {
   OWNER
+  ADMIN
   MEMBER
 }
 model TeamMember{
@@ -64,6 +68,17 @@ model Team {
   description String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  createdBy   String
+  creator     User         @relation(fields: [createdBy], references: [id], onDelete: Cascade)
   members     TeamMember[]
   tasks       Task[]
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

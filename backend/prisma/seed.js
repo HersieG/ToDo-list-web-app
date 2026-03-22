@@ -152,6 +152,65 @@ const tasks = [
   },
 ];
 
+// Replace these with real user IDs from your database
+const USER_1 = "542dab76-5179-4a95-95aa-5a4e18f23a1c";
+const USER_2 = "90abd2a0-6849-4712-9f16-54ffff4cd8a7";
+const USER_3 = "b71490eb-e8f4-416e-8d4d-32b0cdd0a6a9";
+
+const teams = [
+  {
+    id: "team-uuid-1",
+    name: "Frontend Squad",
+    description: "Responsible for all UI/UX tasks",
+    createdBy: USER_1,
+  },
+  {
+    id: "team-uuid-2",
+    name: "Backend crew",
+    description: "Handles all API and database work",
+    createdBy: USER_2,
+  },
+  {
+    id: "team-uuid-3",
+    name: "DevOps",
+    description: "Infrastructure, deployment, and monitoring",
+    createdBy: USER_3,
+  },
+];
+
+const teamMembers = [
+  // Frontend Squad
+  {
+    userId: USER_2,
+    teamId: "team-uuid-1",
+    role: "ADMIN",
+  },
+  {
+    userId: USER_3,
+    teamId: "team-uuid-1",
+    role: "MEMBER",
+  },
+
+  // Backend Crew
+  {
+    userId: USER_1,
+    teamId: "team-uuid-2",
+    role: "ADMIN",
+  },
+
+  // DevOps
+  {
+    userId: USER_1,
+    teamId: "team-uuid-3",
+    role: "MEMBER",
+  },
+  {
+    userId: USER_2,
+    teamId: "team-uuid-3",
+    role: "MEMBER",
+  },
+];
+
 const main = async () => {
   console.log("Seeding tasks...");
   for (const task of tasks) {
@@ -162,6 +221,27 @@ const main = async () => {
       },
     });
     console.log(`Created task: ${task.title}`);
+  }
+
+  for (const team of teams) {
+    await prisma.team.create({
+      data: {
+        ...team,
+        members: {
+          create: {
+            userId: team.createdBy,
+            role: "OWNER",
+          },
+        },
+      },
+    });
+
+    console.log(`Created team: ${team.name}`);
+  }
+  for (const member in teamMembers) {
+    await prisma.teamMember.create({
+      data: teamMembers[member],
+    });
   }
   console.log("Seeding completed.");
 };

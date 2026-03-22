@@ -69,7 +69,7 @@ export const updateTask = async (req, res) => {
     const userId = req.user.id;
     const { title, description, priority, dueDate } = req.body;
     var data = { title, description, priority, dueDate: new Date(dueDate) };
-    console.log(data);
+   
     // if (title){
     //   data.title = title;
     // }
@@ -88,9 +88,6 @@ export const updateTask = async (req, res) => {
       data: data,
     });
 
-    if (updatedTask.count === 0) {
-      return res.status(404).json({ status: "error", error: "Task not found" });
-    }
     return res.status(200).json({ status: "success", data: updatedTask });
   } catch (error) {
     if (error.code === "P2025") {
