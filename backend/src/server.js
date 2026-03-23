@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import invitationRoutes from "./routes/invitationRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import teamMemberRoutes from "./routes/teamMemberRoutes.js";
 connectDB();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/task", taskRoutes);
 app.use("/team", teamRoutes);
+app.use("/teamMember", teamMemberRoutes);
 app.use("/invite", invitationRoutes);
 const PORT = 5001;
 

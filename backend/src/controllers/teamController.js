@@ -75,6 +75,7 @@ export const getTeamMembers = async (req, res) => {
         members: {
           select: {
             role: true,
+            id: true,
             user: {
               select: {
                 id: true,
@@ -244,6 +245,15 @@ export const invite = async (req, res) => {
       where: { userId_teamId: { userId: recipient.id, teamId: teamId } },
       update: { status: "PENDING", createdById: userId },
       create: { userId: recipient.id, teamId: teamId, createdById: userId },
+    });
+
+    //create notification
+    const notification = await prisma.notification.create({
+      data: {
+        userId: recipient.id,
+        message: `You have been invited to join the team ${member.team.name}`,
+        invitationId: invitedUser.id,
+      },
     });
 
     return res.status(201).json({ status: "Success", data: invitedUser });
