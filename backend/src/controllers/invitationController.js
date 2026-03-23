@@ -8,10 +8,11 @@ export const getInvites = async (req, res) => {
     const invites = await prisma.invitation.findMany({
       where: {
         userId: userId,
+        status: "PENDING",
       },
     });
 
-    if (!invites) {
+    if (invites.length === 0) {
       return res.status(404).json({ error: "No invites found" });
     }
 
@@ -35,12 +36,27 @@ export const respondToInvitation = async (req, res) => {
       return res.status(404).json({ error: "Please accept or decline." });
     }
 
+    if (!["ACCEPTED", "DECLINED"].includes(status)) {
+      return res.status(400).json({ error: "Invalid status" });
+    }
+
     const invitation = await prisma.invitation.findFirst({
-      where: { id: invitationId },
+      where: {
+        id: invitationId,
+      },
+      include: {
+        team: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
-    if (!invitation) {
-      return res.status(404).json({ error: "Invitation not found" });
+    if (!invitation || invitation.userId !== userId) {
+      return res
+        .status(404)
+        .json({ error: "Invitation not found or you do not permission" });
     }
 
     if (invitation.status !== "PENDING") {
