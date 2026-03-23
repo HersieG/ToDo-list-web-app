@@ -106,4 +106,6 @@ model Invitation{
   createdAt DateTime @default(now())
   status    inviteStatus @default(PENDING)
   notifications Notification[]
+
+  @@unique([userId, teamId])
 }

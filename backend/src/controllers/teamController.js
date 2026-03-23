@@ -202,7 +202,7 @@ export const invite = async (req, res) => {
     // check to see if the user is apart of the team first or if they are an admin/owner of the team if they are in it
     const member = await prisma.teamMember.findFirst({
       where: {
-        userId: userId,
+        userId: recipientId,
         teamId: teamId,
         role: { in: ["ADMIN", "OWNER"] },
       },
@@ -211,7 +211,7 @@ export const invite = async (req, res) => {
     if (!member) {
       return res
         .status(404)
-        .json({ error: "You do not have permission to invite users." });
+        .json({ error: "You do not have permission to invite users."});
     }
 
     // now invite after validation
