@@ -35,6 +35,20 @@ export const respondToInvitation = async (req, res) => {
       return res.status(404).json({ error: "Please accept or decline." });
     }
 
+    const invitation = await prisma.invitation.findFirst({
+      where: { id: invitationId },
+    });
+
+    if (!invitation) {
+      return res.status(404).json({ error: "Invitation not found" });
+    }
+
+    if (invitation.status !== "PENDING") {
+      return res.status(400).json({
+        error: "Invitation has already been responded to",
+      });
+    }
+
     const responseToInvite = await prisma.invitation.update({
       where: { id: invitationId },
       data: {

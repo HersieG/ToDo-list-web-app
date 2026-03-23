@@ -8,6 +8,7 @@ import taskRoutes from "./routes/taskRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import invitationRoutes from "./routes/invitationRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 connectDB();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 app.use("/task", taskRoutes);
 app.use("/team", teamRoutes);
 app.use("/invite", invitationRoutes);

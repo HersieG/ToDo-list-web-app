@@ -197,12 +197,13 @@ export const deleteTeam = async (req, res) => {
 export const invite = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { teamId, recipientId } = req.params;
+    const { teamId } = req.params;
+    const { recipientEmail } = req.body;
 
     // check to see if the user is apart of the team first or if they are an admin/owner of the team if they are in it
     const member = await prisma.teamMember.findFirst({
       where: {
-        userId: recipientId,
+        userId: userId,
         teamId: teamId,
         role: { in: ["ADMIN", "OWNER"] },
       },
@@ -210,20 +211,42 @@ export const invite = async (req, res) => {
 
     if (!member) {
       return res
-        .status(404)
-        .json({ error: "You do not have permission to invite users."});
+        .status(403)
+        .json({ error: "You do not have permission to invite users." });
     }
 
-    // now invite after validation
-    const invitedUser = await prisma.invitation.create({
-      data: {
-        userId: recipientId,
+    if (!recipientEmail || !recipientEmail.trim()) {
+      return res.status(404).json({ error: "Please enter an email." });
+    }
+
+    const recipient = await prisma.user.findUnique({
+      where: { email: recipientEmail },
+    });
+
+    if (!recipient) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const userInTeam = await prisma.teamMember.findFirst({
+      where: {
+        userId: recipient.id,
         teamId: teamId,
-        createdById: userId,
       },
     });
 
-    return res.status(404).json({ status: "Success", data: invitedUser });
+    if (userInTeam) {
+      return res
+        .status(400)
+        .json({ error: "User is already a member of the team" });
+    }
+    // now invite after validation
+    const invitedUser = await prisma.invitation.upsert({
+      where: { userId_teamId: { userId: recipient.id, teamId: teamId } },
+      update: { status: "PENDING", createdById: userId },
+      create: { userId: recipient.id, teamId: teamId, createdById: userId },
+    });
+
+    return res.status(201).json({ status: "Success", data: invitedUser });
   } catch (error) {
     console.error("Error inviting user to team:", error);
     res
