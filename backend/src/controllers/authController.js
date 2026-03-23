@@ -6,6 +6,11 @@ import { generateToken } from "../utils/generateToken.js";
 const register = async (req, res) => {
   // Handle user registration logic here
   const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+  return res.status(400).json({ error: "All fields are required" });
+}
+
   const userExists = await prisma.user.findUnique({ where: { email } });
 
   if (userExists) {
@@ -26,7 +31,7 @@ const register = async (req, res) => {
 
   const token = generateToken(user.id, res);
 
-  return res.status(201).json({
+  return res.status(200).json({
     status: "success",
     data: {
       user: {

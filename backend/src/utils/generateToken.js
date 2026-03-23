@@ -11,6 +11,6 @@ export const generateToken = (userId, res) => {
     secure: process.env.NODE_ENV === "production", // ensures the cookie is only sent over HTTPS in production
     sameSite: "strict", // protects agianst CSRF attacks by ensuring the cookie is only sent with requests from the same site
     maxAge: 7 * 24 * 60 * 60 * 1000, // Convert days to milliseconds
-  })
+  });
   return token;
 };

@@ -19,13 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-app.use("/task", taskRoutes);
-app.use("/team", teamRoutes);
-app.use("/teamMember", teamMemberRoutes);
-app.use("/invite", invitationRoutes);
-app.use("/notification", notificationRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/task", taskRoutes);
+app.use("/api/team", teamRoutes);
+app.use("/api/teamMember", teamMemberRoutes);
+app.use("/api/invite", invitationRoutes);
+app.use("/api/notification", notificationRoutes);
 const PORT = 5001;
 
 const server = app.listen(PORT, () => {
