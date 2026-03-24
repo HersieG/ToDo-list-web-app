@@ -11,7 +11,6 @@ function App() {
     <div className="h-screen flex flex-col bg-bg text-text">
       <BrowserRouter>
         <AuthProvider>
-          <Navbar />
           <div className="flex-1 overflow-y-auto">
             <Routes>
               <Route path="/" element={<HomePage />} />

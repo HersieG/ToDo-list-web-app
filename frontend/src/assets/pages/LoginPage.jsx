@@ -1,9 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-
+import ErrorAlert from "../../components/ErrorAlert";
+import Navbar from "../../components/Navbar";
 const LoginPage = () => {
-  const { login, loading, error } = useAuth();
+  const { login, loading, error, clearError } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,34 +14,54 @@ const LoginPage = () => {
     login({ email, password });
   };
 
+  useEffect(() => {
+    clearError();
+  }, []);
   return (
-    <div className="h-full overflow-hidden flex flex-col justify-center place-items-center ">
-      <h1 className="font-bold text-2xl mb-8">LOGIN</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col justify-center place-items-center gap-4 w-[50%]"
-      >
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          className="border-2 border-border w-[40%] p-1 rounded-md"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(p) => setPassword(p.target.value)}
-          className="border-2 border-border w-[40%] p-1 rounded-md "
-        />
-        {error && <p>Error: {error}</p>}
-        <button
-          type="submit"
-          disabled={loading}
-          className="border-4 border-border w-fit p-2 rounded-2xl"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+    <div className="h-full overflow-hidden flex flex-col justify-center place-items-center">
+      <div className="flex-1 w-full">
+        <Navbar />
+      </div>
+      <div className="flex-1">
+        <h1 className="font-bold text-2xl mb-8">LOGIN</h1>
+        <form onSubmit={handleSubmit}>
+          <fieldset
+            onSubmit={handleSubmit}
+            className="fieldset bg-base-200 border-base-300 rounded-box w-2xl border p-4 "
+          >
+            <legend className="fieldset-legend">Login</legend>
+
+            <label className="label">Email</label>
+            <input
+              type="email"
+              className="input w-full"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label className="label">Password</label>
+            <input
+              type="password"
+              className="input w-full"
+              placeholder="Password"
+              onChange={(p) => setPassword(p.target.value)}
+            />
+            {error && (
+              <p>
+                <ErrorAlert message={error} className="mt-2" />
+              </p>
+            )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-neutral mt-4 border border-border hover:border-white"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+      <div className="flex-1">{""}</div>
     </div>
   );
 };

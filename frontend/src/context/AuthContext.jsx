@@ -59,9 +59,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const clearError = () => setError(null);
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, loading, error, login, logout, register }}
+      value={{
+        isLoggedIn,
+        loading,
+        error,
+        login,
+        logout,
+        register,
+        clearError,
+      }}
     >
       {children}
     </AuthContext.Provider>

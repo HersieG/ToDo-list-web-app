@@ -6,7 +6,7 @@ const RegisterButton = () => {
   return (
     <button
       onClick={() => navigate("/register")}
-      className="bg-bg p-2 rounded-2xl border border-border hover:cursor-pointer"
+      className="btn border border-border hover:cursor-pointer hover:border-white"
     >
       Register
     </button>
