@@ -7,7 +7,7 @@ import RegisterButton from "./RegisterButton";
 const Navbar = () => {
   const { isLoggedIn } = useAuth();
   return (
-    <div className="drawer border border-border">
+    <div className="drawer border-b border-border">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
@@ -33,9 +33,11 @@ const Navbar = () => {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2 text-2xl font-bold tracking-wider ">
-            ListThat
-          </div>
+          <a href="/" className="flex-1">
+            <div className="mx-2 px-2 text-2xl font-bold tracking-wider ">
+              ListThat
+            </div>
+          </a>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal flex gap-4">
               {/* Navbar menu content here */}

@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <div className="hero bg-base h-full">
       <div className="hero-content text-center">
@@ -15,7 +16,12 @@ const HeroSection = () => {
             A simple way to manage your tasks, track priorities, and get things
             done.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <button
+            onClick={() => navigate("/register")}
+            className="btn btn-primary"
+          >
+            Get Started
+          </button>
         </div>
       </div>
     </div>

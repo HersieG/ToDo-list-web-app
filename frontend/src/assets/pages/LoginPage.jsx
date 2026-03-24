@@ -61,6 +61,12 @@ const LoginPage = () => {
             </button>
           </fieldset>
         </form>
+        <a
+          className="mt-6 hover:underline hover:cursor-pointer"
+          href="/register"
+        >
+          Don't have an account?
+        </a>
       </div>
       <div className="w-full">
         <Footer />
