@@ -8,7 +8,7 @@ const NavbarSidebar = ({ children }) => {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
-        <nav className="navbar w-full bg-base-300 flex">
+        <nav className="navbar w-full bg-base-300 flex border-b border-border">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"

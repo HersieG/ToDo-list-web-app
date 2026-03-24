@@ -30,7 +30,7 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit}>
           <fieldset
             onSubmit={handleSubmit}
-            className="fieldset bg-base-200 border-base-300 rounded-box w-2xl border p-4 "
+            className="fieldset bg-base-200 border-base-300 rounded-box  w-[90vw] sm:w-100 md:w-125 border p-4 "
           >
             <legend className="fieldset-legend">Register</legend>
             <label className="label">Name</label>
@@ -63,7 +63,7 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-neutral mt-4 border border-border hover:border-white"
+              className="btn btn-neutral mt-4 border border-border hover:border-white w-full"
             >
               {loading ? "Logging in..." : "Register"}
             </button>

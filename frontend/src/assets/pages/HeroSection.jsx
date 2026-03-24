@@ -4,11 +4,11 @@ const HeroSection = () => {
   const navigate = useNavigate();
   return (
     <div className="hero bg-base h-full">
-      <div className="hero-content text-center">
+      <div className="hero-content text-center px-4">
         <div className="max-w-md">
-          <h1 className="text-5xl font-bold">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
             Hello there, welcome too
-            <section className="text-transparent bg-linear-to-r bg-clip-text from-blue-500 to-purple-500 mt-5 text-7xl">
+            <section className="text-transparent bg-linear-to-r bg-clip-text from-blue-500 to-purple-500 mt-5 text-4xl sm:text-5xl md:text-7xl">
               ListThat
             </section>
           </h1>
@@ -18,7 +18,7 @@ const HeroSection = () => {
           </p>
           <button
             onClick={() => navigate("/register")}
-            className="btn btn-primary"
+            className="btn btn-primary w-full sm:w-auto"
           >
             Get Started
           </button>
