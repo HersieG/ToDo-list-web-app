@@ -7,6 +7,12 @@ export const getUserInfo = async (req, res) => {
 
     const user = await prisma.user.findFirst({
       where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+      },
     });
 
     if (!user) {
@@ -14,7 +20,7 @@ export const getUserInfo = async (req, res) => {
     }
 
     return res.status(200).json({ data: user });
-  } catch {
+  } catch (error) {
     console.log("Error with getting user info", error);
     return res.status(404).json({ error: "Error fetching user info" });
   }
