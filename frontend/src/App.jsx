@@ -6,6 +6,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import LoginPage from "./assets/pages/LoginPage";
 import Navbar from "./components/Navbar";
 import RegisterPage from "./assets/pages/RegisterPage";
+import Footer from "./components/Footer";
 function App() {
   return (
     <div className="h-screen flex flex-col bg-bg text-text">

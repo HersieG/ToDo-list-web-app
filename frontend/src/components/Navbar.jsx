@@ -33,7 +33,9 @@ const Navbar = () => {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2">Navbar Title</div>
+          <div className="mx-2 flex-1 px-2 text-2xl font-bold tracking-wider ">
+            ListThat
+          </div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal flex gap-4">
               {/* Navbar menu content here */}

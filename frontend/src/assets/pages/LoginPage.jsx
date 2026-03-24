@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import ErrorAlert from "../../components/ErrorAlert";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 const LoginPage = () => {
   const { login, loading, error, clearError } = useAuth();
 
@@ -19,10 +20,10 @@ const LoginPage = () => {
   }, []);
   return (
     <div className="h-full overflow-hidden flex flex-col justify-center place-items-center">
-      <div className="flex-1 w-full">
+      <div className="w-full">
         <Navbar />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col justify-center place-items-center">
         <h1 className="font-bold text-2xl mb-8">LOGIN</h1>
         <form onSubmit={handleSubmit}>
           <fieldset
@@ -61,7 +62,9 @@ const LoginPage = () => {
           </fieldset>
         </form>
       </div>
-      <div className="flex-1">{""}</div>
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 };

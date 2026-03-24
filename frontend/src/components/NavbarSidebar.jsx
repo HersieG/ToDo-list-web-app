@@ -30,7 +30,9 @@ const NavbarSidebar = ({ children }) => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4 flex-1">Navbar Title</div>
+          <div className="mx-2 flex-1 px-2 text-2xl font-bold tracking-wider ">
+            ListThat
+          </div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
