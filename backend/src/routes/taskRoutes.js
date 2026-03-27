@@ -6,6 +6,7 @@ import {
   createTask,
   updateTask,
   deleteTask,
+  completedTask,
 } from "../controllers/tasksController.js";
 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.get("/:id", getTask);
 router.post("/createTask", createTask);
 
 router.put("/updateTask/:id", updateTask);
+
+router.patch("/:id/completed", completedTask);
 
 router.delete("/deleteTask/:id", deleteTask);
 export default router;

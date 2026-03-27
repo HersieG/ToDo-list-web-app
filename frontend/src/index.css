@@ -2,7 +2,11 @@
 @plugin "daisyui";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, corporate, black;
+  themes:
+    light --default,
+    dark --prefersdark,
+    corporate,
+    black;
 }
 :root {
   --background: #0f0f0f;
@@ -12,6 +16,12 @@
   --text-muted: #888888;
   --highlight: #6366f1;
   --border: #2e2e2e;
+  --high-900: oklch(0.55 0.22 25);
+  --high-800: oklch(0.7 0.22 25);
+  --medium-900: oklch(0.8 0.2 105);
+  --medium-800: oklch(0.7 0.15 95);
+  --low-900: oklch(0.65 0.18 150);
+  --low-800: oklch(0.9 0.18 150);
 }
 
 @theme inline {
@@ -20,6 +30,12 @@
   --color-highlight: var(--highlight);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
+  --color-high-900: var(--high-900);
+  --color-high-800: var(--high-800);
+  --color-medium-900: var(--medium-900);
+  --color-medium-800: var(--medium-800);
+  --color-low-900: var(--low-900);
+  --color-low-800: var(--low-800);
 }
 /* :root {
   --text: #6b6375;

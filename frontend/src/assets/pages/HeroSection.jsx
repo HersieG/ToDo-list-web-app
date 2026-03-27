@@ -8,7 +8,7 @@ const HeroSection = () => {
         <div className="max-w-md">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
             Hello there, welcome too
-            <section className="text-transparent bg-linear-to-r bg-clip-text from-blue-500 to-purple-500 mt-5 text-4xl sm:text-5xl md:text-7xl">
+            <section className="text-transparent bg-linear-to-r bg-clip-text from-blue-500 to-purple-500 mt-5 text-4xl sm:text-5xl md:text-7xl tracking-wide">
               ListThat
             </section>
           </h1>

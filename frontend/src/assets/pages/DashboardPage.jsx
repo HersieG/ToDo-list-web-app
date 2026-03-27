@@ -37,6 +37,7 @@ const Dashboard = () => {
               {tasks.map((t) => (
                 <div key={t.id}>
                   <TaskCard
+                    id={t.id}
                     title={t.title}
                     description={t.description}
                     completed={t.completed}

@@ -69,7 +69,7 @@ export const updateTask = async (req, res) => {
     const userId = req.user.id;
     const { title, description, priority, dueDate } = req.body;
     var data = { title, description, priority, dueDate: new Date(dueDate) };
-   
+
     // if (title){
     //   data.title = title;
     // }
@@ -108,6 +108,32 @@ export const deleteTask = async (req, res) => {
     });
 
     return res.status(200).json({ status: "success", data: deletedTask });
+  } catch (error) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ status: "error", error: "Task not found" });
+    }
+    console.error("Error deleting task:", error);
+    return res.status(500).json({ status: "error", error: "Server error" });
+  }
+};
+
+export const completedTask = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const taskId = req.params.id;
+    const { completed } = req.body;
+
+    const updatedTask = await prisma.task.update({
+      where: {
+        id: taskId,
+        userId: userId,
+      },
+      data: {
+        completed: completed,
+      },
+    });
+
+    return res.status(201).json({ status: "Success", data: updateTask });
   } catch (error) {
     if (error.code === "P2025") {
       return res.status(404).json({ status: "error", error: "Task not found" });
