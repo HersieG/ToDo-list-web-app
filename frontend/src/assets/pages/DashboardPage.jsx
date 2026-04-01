@@ -5,7 +5,6 @@ import TaskCard from "../../components/TaskCard";
 import NavbarSidebar from "../../components/NavbarSidebar";
 import Footer from "../../components/Footer";
 
-// ✅ outside Dashboard
 const TaskList = ({ items, onChange }) => (
   <div className="flex flex-col gap-3">
     {items.map((t) => (
@@ -93,7 +92,6 @@ const Dashboard = () => {
             </>
           )}
         </div>
-
         <Footer />
       </div>
     </NavbarSidebar>

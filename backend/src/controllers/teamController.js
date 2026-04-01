@@ -13,6 +13,20 @@ export const getTeams = async (req, res) => {
           },
         },
       },
+      include: {
+        members: {
+          select: {
+            role: true,
+            id: true,
+            user: {
+              select: {
+                name: true,
+                id: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (teams.length === 0) {
@@ -30,7 +44,7 @@ export const getTeam = async (req, res) => {
   try {
     const userId = req.user.id;
     const teamId = req.params.id;
-    console.log(`Fetching team with ID: ${teamId} for user ID: ${userId}`);
+    // console.log(`Fetching team with ID: ${teamId} for user ID: ${userId}`);
 
     const team = await prisma.team.findFirst({
       where: {
@@ -72,6 +86,7 @@ export const getTeamMembers = async (req, res) => {
       },
       select: {
         name: true,
+        id: true,
         members: {
           select: {
             role: true,

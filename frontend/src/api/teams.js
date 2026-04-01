@@ -8,6 +8,6 @@ export const getTeams = async () => {
 
 export const getTeamMembers = async (id) => {
   const response = await request(`/team/${id}/members`);
-  console.log("members: ", response.data.members);
+  console.log("members: ", response);
   return response.data.members;
 };
