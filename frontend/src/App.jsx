@@ -7,6 +7,7 @@ import LoginPage from "./assets/pages/LoginPage";
 import Navbar from "./components/Navbar";
 import RegisterPage from "./assets/pages/RegisterPage";
 import Footer from "./components/Footer";
+import TeamsPage from "./assets/pages/TeamsPage";
 function App() {
   return (
     <div className="h-screen flex flex-col bg-bg text-text">
@@ -24,6 +25,15 @@ function App() {
                 element={
                   <ProtectedRoutes>
                     <Dashboard />
+                  </ProtectedRoutes>
+                }
+              />
+
+              <Route
+                path="/teams"
+                element={
+                  <ProtectedRoutes>
+                    <TeamsPage />
                   </ProtectedRoutes>
                 }
               />

@@ -11,6 +11,8 @@ import invitationRoutes from "./routes/invitationRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import teamMemberRoutes from "./routes/teamMemberRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
+
+
 connectDB();
 
 const app = express();

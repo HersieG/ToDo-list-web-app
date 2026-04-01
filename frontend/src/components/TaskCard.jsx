@@ -1,91 +1,116 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { useIsTaskCompleted } from "../hooks/useIsTaskCompleted";
+
 const formatDate = (isoString) => {
   return new Date(isoString).toLocaleDateString("en-US", {
-    month: "numeric",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
 };
 
-const priorityColor = (p) => {
-  if (p === "HIGH") {
-    return "text-high-900 font-bold tracking-widest";
-  } else if (p === "MEDIUM") {
-    return "text-medium-900 font-bold tracking-widest";
-  } else if (p === "LOW") {
-    return "text-low-900 font-bold tracking-widest";
-  }
-  return "";
+const PRIORITY_CONFIG = {
+  HIGH: {
+    label: "High",
+    classes: "bg-red-500/10 text-red-400 border border-red-500/20",
+  },
+  MEDIUM: {
+    label: "Medium",
+    classes: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20",
+  },
+  LOW: {
+    label: "Low",
+    classes: "bg-green-500/10 text-green-400 border border-green-500/20",
+  },
 };
 
-const priorityColorBg = (p) => {
-  if (p === "HIGH") {
-    return "bg-high-800/10 p-2 rounded-2xl";
-  } else if (p === "MEDIUM") {
-    return "bg-medium-800/10 p-2 rounded-2xl";
-  } else if (p === "LOW") {
-    return "bg-low-800/10 p-2 rounded-2xl";
-  }
-  return "";
-};
-
-const TaskCard = ({ title, description, completed, priority, dueDate, id }) => {
-  const prettyDate = formatDate(dueDate);
-  const [isChecked, setIsChecked] = useState(false);
-
-  const {
-    completed: isCompleted,
-    error,
-    updateTaskCompleted,
-  } = useIsTaskCompleted();
+const TaskCard = ({
+  title,
+  description,
+  completed,
+  priority,
+  dueDate,
+  id,
+  onChange,
+}) => {
+  const { error, updateTaskCompleted } = useIsTaskCompleted(); // ✅ removed completed: isCompleted
 
   const handleCheckboxChange = async () => {
-    setIsChecked(!isChecked);
-    // Here you would also want to make an API call to update the task's completed status in the backend
-    await updateTaskCompleted(id, !isChecked);
+    const next = !completed; // ✅ use prop, not local state
+    onChange(id, next); // ✅ update parent instantly
+    await updateTaskCompleted(id, next); // ✅ sync backend
   };
 
-  useEffect(() => {
-    if (isCompleted) {
-      setIsChecked(true);
-    }
-  }, [isCompleted]);
+  const priorityConfig = PRIORITY_CONFIG[priority] ?? {};
+
   return (
-    <div className="flex flex-col bg-black m-3 p-3 rounded-2xl border-4 border-border h-[20vh] w-[100vh]">
-      <div className="flex justify-between place-items-center border-b border-border pb-2">
-        <h1 className="text-2xl">
+    <div
+      className={`
+      w-full flex flex-col gap-3 p-4 rounded-xl border transition-all duration-200
+      bg-base-200 border-base-300 hover:border-base-content/20 hover:shadow-md
+      ${completed ? "opacity-60" : ""}
+    `}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <label className="flex items-start gap-3 cursor-pointer flex-1 min-w-0">
           <input
             type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange} // ✅ use onChange, not onClick
-            className="checkbox border border-border mr-4"
+            checked={completed} // ✅ controlled by parent
+            onChange={handleCheckboxChange}
+            className="checkbox checkbox-sm mt-1 shrink-0"
           />
-          {title}
-        </h1>
-
-        <div className={priorityColorBg(priority)}>
-          <section className={priorityColor(priority)}>{priority}</section>
+          <span
+            className={`font-semibold text-base leading-snug truncate ${
+              completed
+                ? "line-through text-base-content/40"
+                : "text-base-content"
+            }`}
+          >
+            {title}
+          </span>
+        </label>
+        {priority && (
+          <span
+            className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${priorityConfig.classes}`}
+          >
+            {priorityConfig.label}
+          </span>
+        )}
+      </div>
+      {description && (
+        <p className="text-sm text-base-content/60 leading-relaxed pl-7">
+          {description}
+        </p>
+      )}
+      <div className="flex items-center justify-between pl-7 pt-2 border-t border-base-300">
+        <div className="flex items-center gap-1.5 text-xs text-base-content/40">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          {formatDate(dueDate)}
         </div>
+        <span
+          className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+            completed
+              ? "bg-green-500/10 text-green-400"
+              : "bg-base-300 text-base-content/50"
+          }`}
+        >
+          {completed ? "Completed" : "In Progress"}
+        </span>
       </div>
-
-      <div className="text-text-muted flex-1">
-        <p className="mt-6">{description}</p>
-      </div>
-
-      <div className="flex justify-between">
-        <div>{prettyDate}</div>
-        <section>
-          {isChecked ? (
-            <p className="bg-[#262624] p-2 rounded-2xl">Completed</p>
-          ) : (
-            <p className="bg-[#262624] p-2 rounded-2xl">Not Completed</p>
-          )}
-        </section>
-      </div>
-
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-xs text-red-400 pl-7">{error}</p>}
     </div>
   );
 };
