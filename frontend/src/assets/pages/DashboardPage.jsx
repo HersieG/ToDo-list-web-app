@@ -4,6 +4,9 @@ import { useGetTasks } from "../../hooks/useGetTasks";
 import TaskCard from "../../components/TaskCard";
 import NavbarSidebar from "../../components/NavbarSidebar";
 import Footer from "../../components/Footer";
+import { useState } from "react";
+import Modal from "../../components/Modal";
+import CreateTask from "../../components/CreateTask";
 
 const TaskList = ({ items, onChange }) => (
   <div className="flex flex-col gap-3">
@@ -25,6 +28,7 @@ const TaskList = ({ items, onChange }) => (
 const Dashboard = () => {
   const { user, loading: userLoading } = useGetUser();
   const { tasks, setTasks, loading: tasksLoading } = useGetTasks();
+  const [isOpen, setIsOpen] = useState(false);
 
   const doneTasks = tasks.filter((t) => t.completed);
   const notDoneTasks = tasks.filter((t) => !t.completed);
@@ -40,13 +44,26 @@ const Dashboard = () => {
       <div className="flex flex-col min-h-screen w-full">
         {/* welcome header */}
         <div className="flex justify-center items-center py-8 px-4">
+          <div className="flex-1">{""}</div>
           {userLoading ? (
-            <div className="h-10 w-48 bg-base-300 animate-pulse rounded-lg" />
+            <div className="flex-1 h-10 w-48 bg-base-300 animate-pulse rounded-lg" />
           ) : (
-            <h1 className="text-3xl md:text-4xl font-bold">
+            <h1 className="flex-1 text-3xl md:text-4xl font-bold text-center">
               Welcome, {user?.name}
             </h1>
           )}
+          <div className="flex-1 flex justify-end">
+            <button
+              onClick={() => setIsOpen(true)}
+              className="btn border hover:border-base-content"
+            >
+              {" "}
+              + create task
+            </button>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+              <CreateTask />
+            </Modal>
+          </div>
         </div>
 
         {/* two column layout */}
