@@ -12,3 +12,11 @@ export const taskCompleted = async (id, completed) => {
   });
   return response.data;
 };
+
+export const createTask = async ({ title, description, dueDate, priority }) => {
+  const response = await request("/task/createTask", {
+    method: "POST",
+    body: JSON.stringify({ title, description, dueDate, priority }),
+  });
+  return response;
+};

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getTeams, getTeamMembers } from "../api/teams.js";
+import { getTeams } from "../api/teams.js";
 
 // useGetTeams.js
 export const useGetTeams = () => {

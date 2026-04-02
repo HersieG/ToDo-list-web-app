@@ -27,7 +27,7 @@ const TaskList = ({ items, onChange }) => (
 
 const Dashboard = () => {
   const { user, loading: userLoading } = useGetUser();
-  const { tasks, setTasks, loading: tasksLoading } = useGetTasks();
+  const { tasks, setTasks, loading: tasksLoading, fetchTasks } = useGetTasks();
   const [isOpen, setIsOpen] = useState(false);
 
   const doneTasks = tasks.filter((t) => t.completed);
@@ -61,7 +61,10 @@ const Dashboard = () => {
               + create task
             </button>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-              <CreateTask />
+              <CreateTask
+                onSuccess={fetchTasks}
+                onClose={() => setIsOpen(false)}
+              />
             </Modal>
           </div>
         </div>
