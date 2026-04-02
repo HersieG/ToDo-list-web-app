@@ -57,7 +57,7 @@ const TaskCard = ({
             type="checkbox"
             checked={completed} // ✅ controlled by parent
             onChange={handleCheckboxChange}
-            className="checkbox checkbox-sm mt-1 shrink-0"
+            className="checkbox checkbox-sm mt-1 shrink-0 border border-base-content/50"
           />
           <span
             className={`font-semibold text-base leading-snug truncate ${
