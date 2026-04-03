@@ -1,4 +1,4 @@
-# Taskly
+# ListThat
 
 A full-stack collaborative task management application. Manage your personal tasks and coordinate with your team — with real-time completion tracking, role-based access, and team invitations.
 
