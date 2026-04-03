@@ -74,8 +74,8 @@ A full-stack collaborative task management application. Manage your personal tas
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/taskly.git
-   cd taskly
+   git clone https://github.com/yourusername/listthat.git
+   cd listthat
    ```
 
 2. **Install dependencies**
@@ -93,7 +93,7 @@ A full-stack collaborative task management application. Manage your personal tas
 
    Create a `.env` file in the `server/` directory:
    ```env
-   DATABASE_URL=postgresql://user:password@localhost:5432/taskly
+   DATABASE_URL=postgresql://user:password@localhost:5432/listthat
    JWT_SECRET=your_jwt_secret
    PORT=3000
    ```
