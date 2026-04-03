@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const ROLE_CONFIG = {
   OWNER: {
     label: "Owner",
@@ -16,15 +16,23 @@ const ROLE_CONFIG = {
 };
 const ROLE_ORDER = { OWNER: 0, ADMIN: 1, MEMBER: 2 };
 
-const TeamCard = ({ name, description, members }) => {
+const TeamCard = ({ name, description, members, id }) => {
+  const navigate = useNavigate();
   return (
-    <div className="w-full flex flex-col gap-3 p-4 rounded-xl border transition-all duration-200 bg-base-200 border-base-300 hover:border-base-content/20 hover:shadow-md ">
+    <div
+      onClick={() => navigate(`/team/${id}`)}
+      className="w-full flex flex-col gap-3 p-4 rounded-xl border transition-all duration-200 bg-base-200 border-base-300 hover:border-base-content/20 hover:shadow-md hover:cursor-pointer"
+    >
       <div>{name}</div>
       <div>
         <p className="text-base-content/60 leading-relaxed">{description}</p>
         <div className="flex justify-end border-t border-base-300 ">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn m-1">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn m-1 border border-base-content/20 hover:border-base-content"
+            >
               {members.length < 2
                 ? `${members.length} member`
                 : `${members.length} members`}
@@ -37,7 +45,7 @@ const TeamCard = ({ name, description, members }) => {
                 {[...members]
                   .sort(
                     (a, b) =>
-                      (ROLE_ORDER[a.role] ?? 99) - (ROLE_ORDER[b.role] ?? 99),
+                      (ROLE_ORDER[a.role] ?? 99) - (ROLE_ORDER[b.role] ?? 99)
                   )
                   .map((m) => {
                     const roleconfig = ROLE_CONFIG[m.role] ?? {};

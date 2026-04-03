@@ -1,12 +1,12 @@
 import React from "react";
-import { useGetUser } from "../../hooks/useGetUser";
-import { useGetTasks } from "../../hooks/useGetTasks";
-import TaskCard from "../../components/TaskCard";
-import NavbarSidebar from "../../components/NavbarSidebar";
-import Footer from "../../components/Footer";
+import { useGetUser } from "../hooks/useGetUser";
+import { useGetTasks } from "../hooks/useGetTasks";
+import TaskCard from "../components/TaskCard";
+import NavbarSidebar from "../components/NavbarSidebar";
+import Footer from "../components/Footer";
 import { useState } from "react";
-import Modal from "../../components/Modal";
-import CreateTask from "../../components/CreateTask";
+import Modal from "../components/Modal";
+import CreateTask from "../components/CreateTask";
 
 const TaskList = ({ items, onChange }) => (
   <div className="flex flex-col gap-3">

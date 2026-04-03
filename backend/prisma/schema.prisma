@@ -24,7 +24,7 @@ model User {
   createdTeams Team[]
   notifications Notification[] 
   sentInvitations Invitation[] @relation("InvitationSender")
-  recievedInvitations Invitation[] @relation("InvitationReciever")
+  receivedInvitations  Invitation[] @relation("InvitationReciever")
 }
 
 enum priority {
@@ -45,7 +45,12 @@ model Task {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   teamId      String?
   team        Team?     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  
+  completedBy TeamMember? @relation(fields: [completedById], references: [id], onDelete: SetNull)
+  completedById String?
+
+  @@index([userId])
+  @@index([teamId])
+  @@index([completedById])
 }
 
 enum teamRole {
@@ -60,8 +65,12 @@ model TeamMember{
   role   teamRole @default(MEMBER)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-
+  tasks  Task[]
+  joinedAt DateTime @default(now())
+  
   @@unique([userId, teamId])
+  @@index([userId])
+  @@index([teamId])
 }
 
 model Team {
@@ -86,6 +95,8 @@ model Notification {
   createdAt DateTime @default(now())
   invitationId String? @unique
   invitation   Invitation? @relation(fields: [invitationId], references: [id])
+
+  @@index([userId])
 }
 
 
@@ -108,4 +119,6 @@ model Invitation{
   notifications Notification[]
 
   @@unique([userId, teamId])
+
+  @@index([createdById])
 }

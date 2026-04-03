@@ -1,10 +1,10 @@
 import React from "react";
-import NavbarSidebar from "../../components/NavbarSidebar";
-import Footer from "../../components/Footer";
-import { useGetTeams } from "../../hooks/useGetTeams";
-import TeamCard from "../../components/TeamCard";
-import { useGetUser } from "../../hooks/useGetUser";
-
+import NavbarSidebar from "../components/NavbarSidebar";
+import Footer from "../components/Footer";
+import { useGetTeams } from "../hooks/useGetTeams";
+import TeamCard from "../components/TeamCard";
+import { useGetUser } from "../hooks/useGetUser";
+import { useNavigate } from "react-router-dom";
 const TeamList = ({ items }) => (
   <div className="flex flex-col gap-3">
     {items.map((t) => (
@@ -13,28 +13,30 @@ const TeamList = ({ items }) => (
         name={t.name}
         description={t.description}
         members={t.members}
+        id={t.id}
       />
     ))}
   </div>
 );
 
 const TeamsPage = () => {
+  const navigate = useNavigate();
   const { loading: teamLoading, teams } = useGetTeams();
   const { user, loading: userLoading } = useGetUser();
 
   const myTeams = user
     ? teams.filter((t) =>
         t.members.some(
-          (m) => m.user.id === user.id && ["OWNER", "ADMIN"].includes(m.role),
-        ),
+          (m) => m.user.id === user.id && ["OWNER", "ADMIN"].includes(m.role)
+        )
       )
     : [];
 
   const otherTeams = user
     ? teams.filter((t) =>
         t.members.some(
-          (m) => m.user.id === user.id && !["OWNER", "ADMIN"].includes(m.role),
-        ),
+          (m) => m.user.id === user.id && !["OWNER", "ADMIN"].includes(m.role)
+        )
       )
     : [];
 

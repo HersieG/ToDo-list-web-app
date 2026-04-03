@@ -18,7 +18,6 @@ export const request = async (endpoint, options = {}) => {
     }
 
     const text = await response.text();
-    console.log("Raw response:", text); // see exactly what backend sends back
 
     const data = JSON.parse(text);
     if (!response.ok) {

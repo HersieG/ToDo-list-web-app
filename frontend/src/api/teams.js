@@ -11,3 +11,9 @@ export const getTeamMembers = async (id) => {
   console.log("members: ", response);
   return response.data.members;
 };
+
+export const getTeam = async (id) => {
+  const response = await request(`/team/${id}`);
+
+  return response;
+};

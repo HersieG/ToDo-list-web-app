@@ -7,6 +7,7 @@ import {
   updateTask,
   deleteTask,
   completedTask,
+  getTeamTasks,
 } from "../controllers/tasksController.js";
 
 const router = express.Router();
@@ -14,6 +15,9 @@ const router = express.Router();
 router.use(authMiddleware); // Apply authentication middleware to all routes in this router
 
 router.get("/", getTasks);
+
+router.get("/team/:id", getTeamTasks);
+
 router.get("/:id", getTask);
 
 router.post("/createTask", createTask);

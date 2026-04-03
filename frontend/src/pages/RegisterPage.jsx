@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
-import ErrorAlert from "../../components/ErrorAlert";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import { useAuth } from "../context/AuthContext";
+import ErrorAlert from "../components/ErrorAlert";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const RegisterPage = () => {
   const { register, loading, error, clearError } = useAuth();

@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
-import ErrorAlert from "../../components/ErrorAlert";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import { useAuth } from "../context/AuthContext";
+import ErrorAlert from "../components/ErrorAlert";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 const LoginPage = () => {
   const { login, loading, error, clearError } = useAuth();
 
@@ -18,6 +18,7 @@ const LoginPage = () => {
   useEffect(() => {
     clearError();
   }, []);
+
   return (
     <div className="h-full overflow-hidden flex flex-col justify-center place-items-center">
       <div className="w-full">

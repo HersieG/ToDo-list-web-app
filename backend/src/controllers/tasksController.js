@@ -5,13 +5,38 @@ export const getTasks = async (req, res) => {
   try {
     const userId = req.user.id; // Assuming req.user is set by auth middleware
 
-    console.log(userId);
     const tasks = await prisma.task.findMany({
       where: { userId: userId },
     });
     return res.status(200).json({ status: "success", data: tasks });
   } catch (error) {
     console.error("Error fetching tasks:", error);
+    return res.status(500).json({ status: "error", error: "Server error" });
+  }
+};
+
+export const getTeamTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const teamId = req.params.id;
+    console.log("this is the team id", teamId);
+
+    const tasks = await prisma.task.findMany({
+      where: {
+        teamId: teamId,
+        team: {
+          members: {
+            some: {
+              userId: userId,
+            },
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({ status: "success", data: tasks });
+  } catch (error) {
+    console.error("Error fetching team tasks:", error);
     return res.status(500).json({ status: "error", error: "Server error" });
   }
 };

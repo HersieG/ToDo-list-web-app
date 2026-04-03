@@ -5,6 +5,13 @@ export const getTasks = async () => {
   return response.data;
 };
 
+export const getTeamTasks = async (id) => {
+  console.log(id);
+  const response = await request(`/task/team/${id}`);
+  console.log(response);
+  return response.data;
+};
+
 export const taskCompleted = async (id, completed) => {
   const response = await request(`/task/${id}/completed`, {
     method: "PATCH",
