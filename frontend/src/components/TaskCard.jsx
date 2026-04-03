@@ -30,15 +30,17 @@ const TaskCard = ({
   completed,
   priority,
   dueDate,
+  completedBy,
+  isTeamTask,
   id,
   onChange,
 }) => {
-  const { error, updateTaskCompleted } = useIsTaskCompleted(); // ✅ removed completed: isCompleted
+  const { error, updateTaskCompleted } = useIsTaskCompleted();
 
   const handleCheckboxChange = async () => {
-    const next = !completed; // ✅ use prop, not local state
-    onChange(id, next); // ✅ update parent instantly
-    await updateTaskCompleted(id, next); // ✅ sync backend
+    const next = !completed;
+    onChange(id, next);
+    await updateTaskCompleted(id, next);
   };
 
   const priorityConfig = PRIORITY_CONFIG[priority] ?? {};
@@ -46,16 +48,16 @@ const TaskCard = ({
   return (
     <div
       className={`
-      w-full flex flex-col gap-3 p-4 rounded-xl border transition-all duration-200
-      bg-base-200 border-base-300 hover:border-base-content/20 hover:shadow-md
-      ${completed ? "opacity-60" : ""}
-    `}
+        w-full flex flex-col gap-3 p-4 rounded-xl border transition-all duration-200
+        bg-base-200 border-base-300 hover:border-base-content/20 hover:shadow-md
+        ${completed ? "opacity-60" : ""}
+      `}
     >
       <div className="flex items-start justify-between gap-3">
         <label className="flex items-start gap-3 cursor-pointer flex-1 min-w-0">
           <input
             type="checkbox"
-            checked={completed} // ✅ controlled by parent
+            checked={completed}
             onChange={handleCheckboxChange}
             className="checkbox checkbox-sm mt-1 shrink-0 border border-base-content/50"
           />
@@ -77,11 +79,13 @@ const TaskCard = ({
           </span>
         )}
       </div>
+
       {description && (
         <p className="text-sm text-base-content/60 leading-relaxed pl-7">
           {description}
         </p>
       )}
+
       <div className="flex items-center justify-between pl-7 pt-2 border-t border-base-300">
         <div className="flex items-center gap-1.5 text-xs text-base-content/40">
           <svg
@@ -100,16 +104,25 @@ const TaskCard = ({
           </svg>
           {formatDate(dueDate)}
         </div>
-        <span
-          className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-            completed
-              ? "bg-green-500/10 text-green-400"
-              : "bg-base-300 text-base-content/50"
-          }`}
-        >
-          {completed ? "Completed" : "In Progress"}
-        </span>
+
+        <div className="flex items-center gap-2">
+          {isTeamTask && completed && completedBy && (
+            <span className="text-xs text-base-content/40">
+              by {completedBy.name}
+            </span>
+          )}
+          <span
+            className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+              completed
+                ? "bg-green-500/10 text-green-400"
+                : "bg-base-300 text-base-content/50"
+            }`}
+          >
+            {completed ? "Completed" : "In Progress"}
+          </span>
+        </div>
       </div>
+
       {error && <p className="text-xs text-red-400 pl-7">{error}</p>}
     </div>
   );

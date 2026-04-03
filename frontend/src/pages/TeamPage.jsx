@@ -9,21 +9,27 @@ import CreateTask from "../components/CreateTask";
 import Modal from "../components/Modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetUser } from "../hooks/useGetUser";
 
 const TeamPage = ({ teamName }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
 
+  const { user, loading: userLoading } = useGetUser();
   const { tasks, loading, error, setTasks, fetchTasks } = useGetTeamTasks(id);
   const { team, loading: teamLoading } = useGetTeam(id);
 
   const doneTasks = tasks.filter((t) => t.completed);
   const notDoneTasks = tasks.filter((t) => !t.completed);
 
-  const handleTaskChange = (id, next) => {
+  const handleTaskChange = (taskId, next) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: next } : t))
+      prev.map((t) =>
+        t.id === taskId
+          ? { ...t, completed: next, completedBy: next ? { user } : null }
+          : t
+      )
     );
   };
 
@@ -38,6 +44,8 @@ const TeamPage = ({ teamName }) => {
           completed={t.completed}
           priority={t.priority}
           dueDate={t.dueDate}
+          completedBy={t.completedBy?.user ?? null}
+          isTeamTask={true}
           onChange={onChange}
         />
       ))}

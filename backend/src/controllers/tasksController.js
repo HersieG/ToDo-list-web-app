@@ -32,6 +32,15 @@ export const getTeamTasks = async (req, res) => {
           },
         },
       },
+      include: {
+        completedBy: {
+          include: {
+            user: {
+              select: { id: true, name: true },
+            },
+          },
+        },
+      },
     });
 
     return res.status(200).json({ status: "success", data: tasks });
